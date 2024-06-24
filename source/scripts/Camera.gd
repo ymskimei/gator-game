@@ -5,6 +5,7 @@ onready var tween: Tween = $Tween
 export var rotation_speed: int = 10
 export var offset: Vector3 = Vector3(0, 1, 0)
 export var follow_speed: float = 3.5
+export var height: int = 1
 
 var rotation_timer_right: Timer = Timer.new()
 var rotation_timer_left: Timer = Timer.new()
@@ -21,6 +22,16 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	translation = lerp(translation, $"../Cursor".translation + offset, follow_speed * delta)
+
+	if Input.is_action_just_pressed("cam_up"):
+		if height <= 3:
+			height += 1
+			tween_height()
+	if Input.is_action_just_pressed("cam_down"):
+		if height >= 1:
+			height -= 1
+			tween_height()
+
 	if Input.is_action_just_pressed("cam_right"):
 		tween_isometric(45)
 		rotation_timer_right.start()
@@ -40,4 +51,20 @@ func _on_timeout_left() -> void:
 
 func tween_isometric(direction: int) -> void:
 	tween.interpolate_property(self, "rotation:y", rotation.y, rotation.y + deg2rad(direction), 0.3, Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
+	tween.start()
+
+func tween_height() -> void:
+	var angle: int = -45
+	match height:
+		4:
+			angle = -90
+		3:
+			angle = -45
+		2:
+			angle = 0
+		1:
+			angle = 45
+		0:
+			angle = 90
+	tween.interpolate_property(self, "rotation:x", rotation.x, deg2rad(angle), 0.3, Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
 	tween.start()

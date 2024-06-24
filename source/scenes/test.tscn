@@ -1,0 +1,260 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/texture/grid.png" type="Texture" id=1]
+[ext_resource path="res://source/scripts/Cursor.gd" type="Script" id=2]
+[ext_resource path="res://source/scripts/Camera.gd" type="Script" id=3]
+[ext_resource path="res://source/scenes/objects/demo_a.tscn" type="PackedScene" id=4]
+[ext_resource path="res://source/scenes/objects/demo_b.tscn" type="PackedScene" id=5]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="Shader" id=4]
+code = "/*
+	魔法防御シェーダー 2 by あるる（きのもと 結衣）
+	Magical Shield Shader 2 by Yui Kinomoto @arlez80
+
+	MIT License
+*/
+
+shader_type spatial;
+render_mode unshaded, depth_draw_never;
+
+uniform vec4 barrier_color : hint_color = vec4( 0.05, 1.0, 0.5, 1.0 );
+uniform float barrier_force = 1.0;
+uniform float barrier_interval = 50.0;
+uniform float barrier_speed = 10.0;
+
+void fragment( )
+{
+	vec3 v = ( CAMERA_MATRIX * vec4( VERTEX, 1.0 ) ).xyz;
+	float f = sin( v.y * barrier_interval + TIME * barrier_speed );
+	ALBEDO = barrier_color.rgb;
+	ALPHA = clamp( ( 1.0 - dot( NORMAL, VIEW ) ) * f * barrier_force, 0.0, 1.0 );
+}
+"
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/barrier_color = Color( 0.266667, 0.937255, 0.231373, 1 )
+shader_param/barrier_force = 2.0
+shader_param/barrier_interval = 1.0
+shader_param/barrier_speed = 3.0
+
+[sub_resource type="BoxShape" id=2]
+
+[sub_resource type="SphereShape" id=3]
+
+[sub_resource type="ViewportTexture" id=6]
+viewport_path = NodePath("Viewport")
+
+[node name="Spatial" type="Spatial"]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 6, 0 )
+
+[node name="Level" type="Spatial" parent="."]
+
+[node name="Cursor" type="KinematicBody" parent="."]
+script = ExtResource( 2 )
+objects = [ ExtResource( 4 ), ExtResource( 5 ) ]
+
+[node name="MeshInstance" type="MeshInstance" parent="Cursor"]
+transform = Transform( 1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 5 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Cursor/MeshInstance"]
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, -3.16, 1, 0 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.666667, 0 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D3" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, -0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D4" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, 0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="Cursor/MeshInstance"]
+transform = Transform( -3, 0, -2.62268e-07, 0, 3, 0, 2.62268e-07, 0, -3, 3.16, 1, 0 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.666667, 0 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D3" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, -0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D4" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, 0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D3" type="Sprite3D" parent="Cursor/MeshInstance"]
+transform = Transform( -1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, 1.38128e-07, 1, 3.16 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.666667, 0 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D3" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D3"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, -0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D4" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D3"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, 0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D4" type="Sprite3D" parent="Cursor/MeshInstance"]
+transform = Transform( 3.93402e-07, 0, -3, 0, 3, 0, 3, 0, 3.93402e-07, -1.38128e-07, 1, -3.16 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.666667, 0 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D3" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D4"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, -0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D4" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D4"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, 0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D5" type="Sprite3D" parent="Cursor/MeshInstance"]
+transform = Transform( -1.31134e-07, 0, 3, -3, -1.31134e-07, -1.31134e-07, 1.31134e-07, -3, 5.73206e-15, 1.38128e-07, 3.16, -1 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.666667, 0 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D3" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D5"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, -0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D4" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D5"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, 0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D6" type="Sprite3D" parent="Cursor/MeshInstance"]
+transform = Transform( 3.93402e-07, 0, -3, 3, -1.31134e-07, 3.93402e-07, -1.31134e-07, -3, -1.71962e-14, -1.38128e-07, -3.16, -1 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.666667, 0 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D3" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D6"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, -0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="Sprite3D4" type="Sprite3D" parent="Cursor/MeshInstance/Sprite3D6"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.333333, 0.333333 )
+pixel_size = 0.0555
+axis = 1
+texture = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Cursor"]
+shape = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="Cursor"]
+
+[node name="SpringArm" type="SpringArm" parent="."]
+collision_mask = 2
+shape = SubResource( 3 )
+spring_length = 15.0
+script = ExtResource( 3 )
+
+[node name="Camera" type="Camera" parent="SpringArm"]
+transform = Transform( 1, 0, 0, 0, 0.996195, 0.0871558, 0, -0.0871558, 0.996195, 0, 0, 0 )
+fov = 45.0
+far = 1024.0
+
+[node name="Tween" type="Tween" parent="SpringArm"]
+playback_process_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 32
+custom_constants/margin_top = 32
+custom_constants/margin_left = 32
+custom_constants/margin_bottom = 32
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+margin_left = 640.0
+margin_top = 440.0
+margin_right = 768.0
+margin_bottom = 568.0
+rect_min_size = Vector2( 128, 128 )
+size_flags_horizontal = 8
+size_flags_vertical = 8
+texture = SubResource( 6 )
+expand = true
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 256, 256 )
+own_world = true
+transparent_bg = true
+msaa = 2
+render_target_v_flip = true
+
+[node name="Camera" type="Camera" parent="Viewport"]
+transform = Transform( -0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, 0.353553, -0.612372, -8, 6.5, -8 )
+fov = 25.0
+
+[node name="DirectionalLight" type="DirectionalLight" parent="Viewport"]
+transform = Transform( 0.9656, -0.225545, -0.129409, 0.0713402, -0.248793, 0.965926, -0.250055, -0.94193, -0.224144, 0, 6, 0 )
