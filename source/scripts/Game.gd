@@ -2,6 +2,9 @@ extends Node
 
 const image_path: String = "user://screenshots/"
 
+func _ready() -> void:
+	randomize()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("screenshot"):
 		save_screenshot()
@@ -21,3 +24,4 @@ func get_screenshot() -> Image:
 	var image: Image = screen.get_data()
 	image.flip_y()
 	return image
+

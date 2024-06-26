@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/tile_delete_2.ogg-5500f79e7b3d6a4671bdaa27bbb86272.oggstr"
+
+[deps]
+
+source_file="res://assets/sound/tile_delete_2.ogg"
+dest_files=[ "res://.import/tile_delete_2.ogg-5500f79e7b3d6a4671bdaa27bbb86272.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

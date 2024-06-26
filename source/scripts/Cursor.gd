@@ -10,6 +10,8 @@ onready var level: Spatial = $"../Level"
 
 export var objects: Array = []
 
+var selected: PhysicsBody = null
+
 var selection: int = 0
 var grid_size: int = 2
 
@@ -39,11 +41,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			var node = objects[selection].instance()
 			level.get_child(0).add_child(node)
 			node.set_global_translation(Vector3(stepify(get_global_translation().x, grid_size), stepify(get_global_translation().y, grid_size), stepify(get_global_translation().z, grid_size)))
-
+			TempControl.play_sfx("tile_place_0")
 	#Delete tiles if they are present
 	if event.is_action_pressed("action_sub") and !can_place:
 		for n in grid_chunk.get_overlapping_bodies():
 			n.queue_free()
+			TempControl.play_sfx("tile_delete_0")
 
 func _physics_process(delta: float) -> void:
 	direction.x = Input.get_axis("joy_left", "joy_right")
@@ -71,6 +74,12 @@ func _physics_process(delta: float) -> void:
 			can_place = true
 		highlight.get_surface_material(0).set_shader_param("barrier_color", Color("44EF3B"))
 		cursor.get_surface_material(0).set_albedo(Color("44EF3B"))
+		if selected != null:
+			selected == null
+
+func reset() -> void:
+	set_global_translation(Vector3.ZERO)
+	selection = 0
 
 func update_selected_display() -> void:
 	#Update corner display of current tile selection for placing
@@ -89,3 +98,6 @@ func tween_position() -> void:
 	tween.start()
 	yield(tween, "tween_completed")
 	set_global_translation(Vector3(stepify(get_global_translation().x, grid_size), stepify(get_global_translation().y, grid_size), stepify(get_global_translation().z, grid_size)))
+
+func _on_Area_body_entered(body):
+	selected = body

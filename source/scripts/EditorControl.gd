@@ -1,8 +1,10 @@
 extends CanvasLayer
 
+onready var cursor: KinematicBody = $"../Cursor"
+
 onready var file_container: VBoxContainer = $MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer/LevelsList
 onready var line_edit: LineEdit = $MarginContainer/ColorRect/VBoxContainer/MarginContainer/LineEdit
-
+onready var close: Button = $MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer/ButtonClose
 onready var level: Spatial = $"../Level"
 
 var resource_path: String = "user://levels/"
@@ -20,6 +22,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if !is_visible():
 			set_visible(true)
 			get_tree().paused = true
+			close.grab_focus()
+			if $"../CanvasLayer2".is_visible():
+				$"../CanvasLayer2".set_visible(false)
 
 func _on_ButtonSave_button_down() -> void:
 	if line_edit.get_text().length() > 0:
@@ -34,6 +39,7 @@ func _on_ButtonClear_button_down():
 	level.get_child(0).queue_free()
 	blank.set_name("Blank")
 	level.add_child(blank)
+	cursor.reset()
 
 func _on_ButtonClose_button_up():
 		set_visible(false)
@@ -44,6 +50,7 @@ func _on_ButtonLoad_button_down() -> void:
 		var scene = ResourceLoader.load(resource_path + selected_level + file_type)
 		scene.set_name("Custom")
 		level.add_child(scene.instance())
+		cursor.reset()
 
 func _on_File_selected(path, button) -> void:
 	selected_level = button.get_text()
