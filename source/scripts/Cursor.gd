@@ -41,12 +41,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			var node = objects[selection].instance()
 			level.get_child(0).add_child(node)
 			node.set_global_translation(Vector3(stepify(get_global_translation().x, grid_size), stepify(get_global_translation().y, grid_size), stepify(get_global_translation().z, grid_size)))
-			TempControl.play_sfx("tile_place_0")
+			TempControl.play_rand_sfx(["tile_place_0", "tile_place_1", "tile_place_2"], 1.0, 0.5)
 	#Delete tiles if they are present
 	if event.is_action_pressed("action_sub") and !can_place:
 		for n in grid_chunk.get_overlapping_bodies():
 			n.queue_free()
-			TempControl.play_sfx("tile_delete_0")
+			TempControl.play_rand_sfx(["tile_delete_0", "tile_delete_1", "tile_delete_2"], 1.0, 0.4)
 
 func _physics_process(delta: float) -> void:
 	direction.x = Input.get_axis("joy_left", "joy_right")

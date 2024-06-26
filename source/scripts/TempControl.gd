@@ -27,6 +27,9 @@ func play_sfx(file_name: String, pitch: float = 1.0, volume: float = 0.0) -> voi
 		yield(sfx, "finished")
 		sfx.queue_free()
 
+func play_rand_sfx(file_name_array: Array = [], pitch: float = 1.0, volume: float = 0.0):
+	play_sfx(file_name_array[rand_range(0, file_name_array.size())])
+
 func play_pos_sfx(file_name: String, spatial: Vector3 = Vector3.ZERO, pitch: float = 1.0, volume: float = 0.0) -> void:
 	var sfx = AudioStreamPlayer3D.new()
 	var sound_effect = get_sound(file_name)
