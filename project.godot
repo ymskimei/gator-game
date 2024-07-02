@@ -8,15 +8,32 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "StateMain",
+"language": "GDScript",
+"path": "res://source/scripts/player/StateMain.gd"
+}, {
+"base": "StaticBody",
+"class": "TileStart",
+"language": "GDScript",
+"path": "res://source/scripts/tile/TileStart.gd"
+} ]
+_global_script_class_icons={
+"StateMain": "",
+"TileStart": ""
+}
+
 [application]
 
-config/name="Level Builder"
+config/name="See Ya Later"
 run/main_scene="res://source/scenes/test.tscn"
 config/icon="res://assets/texture/icon.png"
 
 [autoload]
 
 TempControl="*res://source/scripts/TempControl.gd"
+Game="*res://source/scripts/Game.gd"
 
 [debug]
 
@@ -71,49 +88,49 @@ ui_down={
  ]
 }
 cam_up={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":3,"axis_value":-1.0,"script":null)
  ]
 }
 cam_left={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":-1.0,"script":null)
  ]
 }
 cam_right={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":1.0,"script":null)
  ]
 }
 cam_down={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":3,"axis_value":1.0,"script":null)
  ]
 }
 joy_up={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":-1.0,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 joy_left={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":-1.0,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":65,"unicode":0,"echo":false,"script":null)
  ]
 }
 joy_right={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":1.0,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 joy_down={
-"deadzone": 0.5,
+"deadzone": 0.1,
 "events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":1.0,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]

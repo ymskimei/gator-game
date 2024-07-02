@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+export var player: PackedScene
+
 onready var cursor: KinematicBody = $"../Cursor"
 
 onready var file_container: VBoxContainer = $MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer/LevelsList
@@ -25,6 +27,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			close.grab_focus()
 			if $"../CanvasLayer2".is_visible():
 				$"../CanvasLayer2".set_visible(false)
+
+func _on_ButtonTest_button_down():
+	for n in level.get_child(0).get_children():
+		if n is TileStart:
+			n.spawn(player)
+			Game.camera.cam.make_current()
+			Game.editor_mode = false
+			_on_ButtonClose_button_up()
 
 func _on_ButtonSave_button_down() -> void:
 	if line_edit.get_text().length() > 0:
@@ -97,3 +107,5 @@ func get_files(folder_path: String, path: bool = false, recursive: bool = true) 
 						printerr("Could not open file: ", file_path)
 			file_name = dir.get_next()
 	return files
+
+

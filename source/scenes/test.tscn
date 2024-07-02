@@ -1,21 +1,23 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://source/scenes/objects/tile_balsa.tscn" type="PackedScene" id=1]
-[ext_resource path="res://source/scripts/Cursor.gd" type="Script" id=2]
-[ext_resource path="res://source/scripts/Camera.gd" type="Script" id=3]
+[ext_resource path="res://source/scripts/EditorCursor.gd" type="Script" id=2]
+[ext_resource path="res://source/scripts/EditorCamera.gd" type="Script" id=3]
 [ext_resource path="res://source/scenes/objects/demo_a.tscn" type="PackedScene" id=4]
 [ext_resource path="res://source/scenes/objects/demo_b.tscn" type="PackedScene" id=5]
 [ext_resource path="res://source/scripts/EditorControl.gd" type="Script" id=6]
-[ext_resource path="res://source/scripts/Game.gd" type="Script" id=7]
+[ext_resource path="res://source/scripts/EditorWorld.gd" type="Script" id=7]
 [ext_resource path="res://source/scenes/objects/demo_c.tscn" type="PackedScene" id=8]
 [ext_resource path="res://assets/texture/water.png" type="Texture" id=9]
 [ext_resource path="res://source/scripts/Environment.gd" type="Script" id=10]
 [ext_resource path="res://assets/texture/tile_sand.png" type="Texture" id=11]
-[ext_resource path="res://source/scenes/TileMenu.gd" type="Script" id=12]
+[ext_resource path="res://source/scripts/TileMenu.gd" type="Script" id=12]
 [ext_resource path="res://source/scenes/objects/tile_warp.tscn" type="PackedScene" id=13]
 [ext_resource path="res://source/scenes/objects/tile_end.tscn" type="PackedScene" id=14]
 [ext_resource path="res://source/scenes/objects/tile_start.tscn" type="PackedScene" id=15]
 [ext_resource path="res://source/scenes/objects/tile_cheese.tscn" type="PackedScene" id=16]
+[ext_resource path="res://source/scenes/player.tscn" type="PackedScene" id=17]
+[ext_resource path="res://source/scenes/camera.tscn" type="PackedScene" id=18]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -211,7 +213,7 @@ expand = true
 
 [node name="SpringArm" type="SpringArm" parent="."]
 pause_mode = 1
-collision_mask = 2
+collision_mask = 4
 shape = SubResource( 3 )
 spring_length = 15.0
 script = ExtResource( 3 )
@@ -228,10 +230,13 @@ playback_process_mode = 0
 
 [node name="Blank" type="Spatial" parent="Level"]
 
+[node name="SpringArm" parent="Level" instance=ExtResource( 18 )]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 pause_mode = 2
 visible = false
 script = ExtResource( 6 )
+player = ExtResource( 17 )
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
 anchor_right = 1.0
@@ -310,28 +315,34 @@ margin_bottom = 356.0
 custom_constants/separation = 32
 alignment = 1
 
-[node name="ButtonSave" type="Button" parent="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
-margin_top = 74.0
+[node name="ButtonTest" type="Button" parent="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
+margin_top = 48.0
 margin_right = 254.0
-margin_bottom = 94.0
+margin_bottom = 68.0
+text = "Test"
+
+[node name="ButtonSave2" type="Button" parent="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
+margin_top = 100.0
+margin_right = 254.0
+margin_bottom = 120.0
 text = "Save"
 
 [node name="ButtonLoad" type="Button" parent="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
-margin_top = 126.0
+margin_top = 152.0
 margin_right = 254.0
-margin_bottom = 146.0
+margin_bottom = 172.0
 text = "Load"
 
 [node name="ButtonClear" type="Button" parent="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
-margin_top = 178.0
+margin_top = 204.0
 margin_right = 254.0
-margin_bottom = 198.0
+margin_bottom = 224.0
 text = "Clear"
 
 [node name="ButtonClose" type="Button" parent="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
-margin_top = 230.0
+margin_top = 256.0
 margin_right = 254.0
-margin_bottom = 250.0
+margin_bottom = 276.0
 text = "Close"
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
@@ -421,7 +432,8 @@ skeleton = NodePath("../..")
 material/0 = SubResource( 13 )
 
 [connection signal="body_entered" from="Cursor/Area" to="Cursor" method="_on_Area_body_entered"]
-[connection signal="button_down" from="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer/ButtonSave" to="CanvasLayer" method="_on_ButtonSave_button_down"]
+[connection signal="button_down" from="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer/ButtonTest" to="CanvasLayer" method="_on_ButtonTest_button_down"]
+[connection signal="button_down" from="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer/ButtonSave2" to="CanvasLayer" method="_on_ButtonSave_button_down"]
 [connection signal="button_down" from="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer/ButtonLoad" to="CanvasLayer" method="_on_ButtonLoad_button_down"]
 [connection signal="button_down" from="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer/ButtonClear" to="CanvasLayer" method="_on_ButtonClear_button_down"]
 [connection signal="button_up" from="CanvasLayer/MarginContainer/ColorRect/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer/ButtonClose" to="CanvasLayer" method="_on_ButtonClose_button_up"]

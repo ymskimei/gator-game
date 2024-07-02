@@ -15,7 +15,7 @@ uv1_triplanar = true
 
 [sub_resource type="BoxShape" id=3]
 
-[node name="StaticBody" type="StaticBody"]
+[node name="StaticBody" type="StaticBody" groups=["warp"]]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 4 )

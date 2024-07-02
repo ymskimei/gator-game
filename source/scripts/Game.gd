@@ -1,27 +1,66 @@
-extends Node
+extends Spatial
 
-const image_path: String = "user://screenshots/"
+const sound_dir: String = "res://assets/sound/"
 
-func _ready() -> void:
-	randomize()
+var editor_mode: bool = true
+var invert_camera: bool = false
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("screenshot"):
-		save_screenshot()
+var camera: Spatial = null
+var player: Spatial = null
+var editor_camera: Spatial = null
+var editor_cursor: Spatial = null
 
-func save_screenshot() -> void:
-	var time: String = Time.get_date_string_from_system() + "_" + Time.get_time_string_from_system().replace(":", ".")
-	var count: int = 0
-	var extension: String = ".png"
-	var dir = Directory.new()
-	if !dir.dir_exists(image_path):
-		dir.make_dir(image_path)
-	var image = get_screenshot()
-	image.save_png(image_path + time + extension)
+func set_camera(node: Spatial):
+	camera = node
 
-func get_screenshot() -> Image:
-	var screen: Texture = get_viewport().get_texture()
-	var image: Image = screen.get_data()
-	image.flip_y()
-	return image
+func set_player(node: Spatial):
+	player = node
 
+func set_editor_camera(node: Spatial):
+	editor_camera = node
+
+func set_editor_cursor(node: Spatial):
+	editor_cursor = node
+
+func play_sfx(file_name: String, pitch: float = 1.0, volume: float = 0.0) -> void:
+	var sfx = AudioStreamPlayer.new()
+	var sound_effect = get_sound(file_name)
+	if sound_effect:
+		sfx.stream = sound_effect
+		sfx.set_volume_db(-8.0)
+		sfx.set_bus("SFX")
+		add_child(sfx)
+		sfx.set_pitch_scale(pitch)
+		sfx.set_volume_db(volume)
+		sfx.play()
+		yield(sfx, "finished")
+		sfx.queue_free()
+
+func play_rand_sfx(file_name_array: Array = [], pitch: float = 1.0, volume: float = 0.0):
+	play_sfx(file_name_array[rand_range(0, file_name_array.size())])
+
+func play_pos_sfx(file_name: String, spatial: Vector3 = Vector3.ZERO, pitch: float = 1.0, volume: float = 0.0) -> void:
+	var sfx = AudioStreamPlayer3D.new()
+	var sound_effect = get_sound(file_name)
+	if sound_effect:
+		sfx.stream = sound_effect
+		sfx.set_unit_db(8.0)
+		sfx.set_attenuation_filter_db(-16.0)
+		sfx.set_attenuation_filter_cutoff_hz(16000.0)
+		sfx.set_bus("SFX")
+		add_child(sfx)
+		sfx.global_translation = spatial
+		sfx.pitch_scale = pitch
+		sfx.unit_db = volume
+		sfx.play()
+		yield(sfx, "finished")
+		sfx.queue_free()
+
+func get_sound(file_name: String) -> AudioStreamOGGVorbis:
+	var full_path = sound_dir + file_name + ".ogg"
+	var file = File.new()
+	var ogg = AudioStreamOGGVorbis.new()
+	file.open(full_path, File.READ)
+	ogg.data = file.get_buffer(file.get_len())
+	file.close()
+	return ogg

@@ -1,0 +1,275 @@
+[gd_scene format=2]
+
+[node name="ClimbingRays" type="Spatial"]
+unique_name_in_owner = true
+
+[node name="Ray" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray2" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray3" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray4" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray5" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray6" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray7" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 8.74228e-08, 1, 0, -1, 8.74228e-08, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray18" type="RayCast" parent="."]
+transform = Transform( 0.707107, 0.707107, 3.09086e-08, 0, -4.37114e-08, 1, 0.707107, -0.707107, -3.09086e-08, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray19" type="RayCast" parent="."]
+transform = Transform( 0.707107, -0.707107, -3.09086e-08, 0, -4.37114e-08, 1, -0.707107, -0.707107, -3.09086e-08, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray20" type="RayCast" parent="."]
+transform = Transform( -0.707107, -0.707107, -3.09086e-08, 0, -4.37114e-08, 1, -0.707107, 0.707107, 3.09086e-08, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray21" type="RayCast" parent="."]
+transform = Transform( -0.707107, 0.707107, 3.09086e-08, 0, -4.37114e-08, 1, 0.707107, 0.707107, 3.09086e-08, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray8" type="RayCast" parent="."]
+transform = Transform( 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray9" type="RayCast" parent="."]
+transform = Transform( 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray10" type="RayCast" parent="."]
+transform = Transform( 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0, 1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray11" type="RayCast" parent="."]
+transform = Transform( 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0, 1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray14" type="RayCast" parent="."]
+transform = Transform( 0.353553, -0.612372, 0.707107, 0.866025, 0.5, 0, -0.353553, 0.612372, 0.707107, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray15" type="RayCast" parent="."]
+transform = Transform( 0.353553, -0.612372, -0.707107, 0.866025, 0.5, 0, 0.353553, -0.612372, 0.707107, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray16" type="RayCast" parent="."]
+transform = Transform( -0.353553, 0.612372, -0.707107, 0.866025, 0.5, 0, 0.353553, -0.612372, -0.707107, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray17" type="RayCast" parent="."]
+transform = Transform( -0.353553, 0.612372, 0.707107, 0.866025, 0.5, 0, -0.353553, 0.612372, -0.707107, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray12" type="RayCast" parent="."]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray13" type="RayCast" parent="."]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray22" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray23" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.5, -0.866025, 0, 0.866025, -0.5, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray24" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray25" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.866025, -0.5, 0, 0.5, -0.866025, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray26" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray27" type="RayCast" parent="."]
+transform = Transform( 0.866026, 0.5, -8.74228e-08, 0.5, -0.866025, 0, -7.57104e-08, -4.37114e-08, -1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray28" type="RayCast" parent="."]
+transform = Transform( 0.866026, -0.5, 8.74228e-08, -0.5, -0.866025, 0, 7.57104e-08, -4.37114e-08, -1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray29" type="RayCast" parent="."]
+transform = Transform( 0.5, -0.866025, -8.74228e-08, -0.866025, -0.5, 0, -4.37114e-08, 7.57103e-08, -1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray31" type="RayCast" parent="."]
+transform = Transform( 0.353553, -0.612372, -0.707107, -0.866025, -0.5, 0, -0.353553, 0.612372, -0.707107, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray32" type="RayCast" parent="."]
+transform = Transform( 0.353553, -0.612372, 0.707107, -0.866025, -0.5, 0, 0.353553, -0.612372, -0.707107, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray33" type="RayCast" parent="."]
+transform = Transform( -0.353553, 0.612372, 0.707107, -0.866025, -0.5, 0, 0.353553, -0.612372, 0.707107, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray34" type="RayCast" parent="."]
+transform = Transform( -0.353553, 0.612372, -0.707107, -0.866025, -0.5, 0, -0.353553, 0.612372, 0.707107, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )
+
+[node name="Ray30" type="RayCast" parent="."]
+transform = Transform( 0.5, 0.866025, -8.74228e-08, 0.866025, -0.5, 0, -4.37114e-08, -7.57103e-08, -1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+collision_mask = 12
+collide_with_areas = true
+debug_shape_custom_color = Color( 0.333333, 0.835294, 0.901961, 1 )

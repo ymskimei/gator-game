@@ -1,0 +1,333 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://room/room.tscn" type="PackedScene" id=1]
+[ext_resource path="res://source/scenes/camera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://source/scenes/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://room/TestRoom.gd" type="Script" id=4]
+[ext_resource path="res://assets/texture/trail.png" type="Texture" id=5]
+
+[sub_resource type="ProceduralSky" id=58]
+sky_top_color = Color( 0.486275, 0.745098, 1, 1 )
+sky_horizon_color = Color( 0.654902, 0.929412, 1, 1 )
+ground_bottom_color = Color( 0.541176, 0.772549, 1, 1 )
+ground_horizon_color = Color( 0.74902, 0.937255, 0.933333, 1 )
+sun_color = Color( 1, 0.984314, 0.294118, 1 )
+sun_angle_min = 6.0
+sun_angle_max = 12.0
+sun_curve = 0.1
+
+[sub_resource type="Environment" id=1]
+background_mode = 2
+background_sky = SubResource( 58 )
+ambient_light_color = Color( 0.843137, 0.843137, 0.843137, 1 )
+ambient_light_sky_contribution = 0.0
+
+[sub_resource type="PhysicsMaterial" id=55]
+
+[sub_resource type="CubeMesh" id=56]
+size = Vector3( 10, 8, 2 )
+
+[sub_resource type="BoxShape" id=57]
+extents = Vector3( 1, 4, 5 )
+
+[sub_resource type="PhysicsMaterial" id=61]
+bounce = 1.0
+
+[sub_resource type="CubeMesh" id=59]
+size = Vector3( 3, 3, 3 )
+
+[sub_resource type="BoxShape" id=60]
+extents = Vector3( 1.5, 1.5, 1.5 )
+
+[sub_resource type="PhysicsMaterial" id=62]
+friction = 0.5
+bounce = 1.0
+
+[sub_resource type="Shader" id=10]
+code = "shader_type particles;
+
+render_mode keep_data,disable_force,disable_velocity;
+
+void vertex() {
+	vec3 a = (EMISSION_TRANSFORM*vec4(0,-1,0,1)).xyz;
+	vec3 b = (EMISSION_TRANSFORM*vec4(0,1,0,1)).xyz;
+
+	if(CUSTOM.w == LIFETIME){
+		CUSTOM.z = LIFETIME;
+		CUSTOM.w = 0.0;
+	}
+
+	if(CUSTOM.w == 0.0){
+		TRANSFORM[0].xyz = b;
+		TRANSFORM[1].xyz = a;
+		TRANSFORM[2].xyz = a;
+		TRANSFORM[3].xyz = b;
+	}
+	if(CUSTOM.w == 1.0){
+		TRANSFORM[0].xyz = b;
+		TRANSFORM[1].xyz = a;
+	}
+
+	CUSTOM.w++;
+}"
+
+[sub_resource type="ShaderMaterial" id=11]
+shader = SubResource( 10 )
+
+[sub_resource type="Shader" id=13]
+code = "shader_type spatial;
+
+render_mode unshaded,blend_add,world_vertex_coords,cull_disabled;
+
+uniform sampler2D tex;
+
+void vertex(){
+	vec3 a = mix(WORLD_MATRIX[3].xyz,WORLD_MATRIX[2].xyz,UV.y);
+	vec3 b = mix(WORLD_MATRIX[0].xyz,WORLD_MATRIX[1].xyz,UV.y);
+	VERTEX = mix(a,b,UV.x);
+	
+	UV.x = (INSTANCE_CUSTOM.w-1.0 - UV.x)/INSTANCE_CUSTOM.z;
+}
+
+void fragment(){
+	vec4 T = texture(tex,UV);
+	ALBEDO = T.xyz;
+	ALPHA = T.w;
+}"
+
+[sub_resource type="ShaderMaterial" id=14]
+shader = SubResource( 13 )
+shader_param/tex = ExtResource( 5 )
+
+[sub_resource type="QuadMesh" id=12]
+material = SubResource( 14 )
+
+[node name="Game" type="Spatial"]
+script = ExtResource( 4 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -1.13133e-08, 0.965926, -0.258819, 4.2222e-08, 0.258819, 0.965926, 1, -2.66454e-15, -4.37114e-08, 0, -5.24537e-09, -0.12 )
+light_energy = 0.4
+light_specular = 0.0
+shadow_enabled = true
+
+[node name="Room" parent="." instance=ExtResource( 1 )]
+
+[node name="Wall" type="RigidBody" parent="." groups=["sticky"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 4, 14 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 55 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Wall"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 56 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Wall"]
+shape = SubResource( 57 )
+
+[node name="Spring" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 55, -1, -5 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 61 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Spring"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spring"]
+shape = SubResource( 60 )
+
+[node name="Spring2" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 49, -1, -5 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 61 )
+gravity_scale = 0.0
+
+[node name="MeshInstance" type="MeshInstance" parent="Spring2"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spring2"]
+shape = SubResource( 60 )
+
+[node name="Spring4" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 49, -4, 1 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 62 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Spring4"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spring4"]
+shape = SubResource( 60 )
+
+[node name="Spring5" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 49, -4, 7 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 62 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Spring5"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spring5"]
+shape = SubResource( 60 )
+
+[node name="Spring3" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 43, -1, -5 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 61 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Spring3"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spring3"]
+shape = SubResource( 60 )
+
+[node name="Block" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 9, 26 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 55 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Block"]
+shape = SubResource( 60 )
+
+[node name="Block2" type="RigidBody" parent="Block"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 55 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block/Block2"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Block/Block2"]
+shape = SubResource( 60 )
+
+[node name="Block3" type="RigidBody" parent="Block"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 55 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block/Block3"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Block/Block3"]
+shape = SubResource( 60 )
+
+[node name="Block4" type="RigidBody" parent="Block"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -6 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 55 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block/Block4"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Block/Block4"]
+shape = SubResource( 60 )
+
+[node name="Block5" type="RigidBody" parent="Block"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 2, -11 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 55 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block/Block5"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Block/Block5"]
+shape = SubResource( 60 )
+
+[node name="Block6" type="RigidBody" parent="Block"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 2, -14 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 55 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block/Block6"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Block/Block6"]
+shape = SubResource( 60 )
+
+[node name="Block7" type="RigidBody" parent="Block"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 2, -24 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 55 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block/Block7"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 59 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Block/Block7"]
+shape = SubResource( 60 )
+
+[node name="Wall2" type="RigidBody" parent="." groups=["sticky"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 4, 14 )
+collision_layer = 2
+collision_mask = 3
+mode = 1
+physics_material_override = SubResource( 55 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Wall2"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 56 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Wall2"]
+shape = SubResource( 57 )
+
+[node name="Camera" parent="." instance=ExtResource( 2 )]
+collision_mask = 2
+margin = 0.5
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, -6 )
+
+[node name="Particles" type="Particles" parent="Player"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+amount = 100
+lifetime = 100.0
+speed_scale = 60.0
+fixed_fps = 60
+local_coords = false
+process_material = SubResource( 11 )
+draw_passes = 2
+draw_pass_1 = SubResource( 12 )
+draw_pass_2 = null
